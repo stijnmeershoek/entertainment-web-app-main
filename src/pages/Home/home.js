@@ -31,11 +31,11 @@ export function Home({ reverse, setReverse }) {
       <section aria-labelledby="section-title">
         <h2 id="section-title">Recommended for you</h2>
         <div className="media-grid">
-          <MediaCard title="dogs" bookmarked={false} trending={false}></MediaCard>
-          <MediaCard title="community-of-ours" bookmarked={false} trending={false}></MediaCard>
-          <MediaCard title="during-the-hunt" bookmarked={false} trending={false}></MediaCard>
-          <MediaCard title="whispering-hill" bookmarked={false} trending={false}></MediaCard>
-          <MediaCard title="the-great-lands" bookmarked={false} trending={false}></MediaCard>
+          <MediaCard title="Dogs" bookmarked={false} trending={false}></MediaCard>
+          <MediaCard title="Community of Ours" bookmarked={false} trending={false}></MediaCard>
+          <MediaCard title="During The Hunt" bookmarked={false} trending={false}></MediaCard>
+          <MediaCard title="Whispering Hill" bookmarked={false} trending={false}></MediaCard>
+          <MediaCard title="The Great Lands" bookmarked={false} trending={false}></MediaCard>
         </div>
       </section>
     </Page>

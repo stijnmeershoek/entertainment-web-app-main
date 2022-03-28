@@ -46,6 +46,10 @@
   font-weight: var(--font-weight-medium);
 }
 
+.media-grid .media-card h3 {
+  font-size: var(--font-size-300);
+}
+
 @media screen and (min-width: 768px) {
   .media-card {
     --meta-gap: 0.5rem;
@@ -53,8 +57,14 @@
 }
 
 .media-card dd {
+  font-size: var(--font-size-200);
   display: inline-flex;
   align-items: baseline;
+}
+
+.media-grid .media-card dd {
+  font-size: var(--font-size-100);
+  color: var(--gray-400-75pc);
 }
 
 .media-card dd svg {

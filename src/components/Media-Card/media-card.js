@@ -19,10 +19,10 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
   };
 
   useEffect(() => {
-    const small = require(`../../assets/thumbnails/${media.title}/trending/small.jpg`);
-    const large = require(`../../assets/thumbnails/${media.title}/trending/large.jpg`);
+    const small = require(`../../assets/thumbnails/${title.replace(/\s+/g, '-').toLowerCase()}/${trending ? "trending" : "regular"}/small.jpg`);
+    const large = require(`../../assets/thumbnails/${title.replace(/\s+/g, '-').toLowerCase()}/${trending ? "trending" : "regular"}/large.jpg`);
     if (!trending) {
-      const medium = require(`../../assets/thumbnails/${media.title}/regular/medium.jpg`);
+      const medium = require(`../../assets/thumbnails/${title.replace(/\s+/g, '-').toLowerCase()}/regular/medium.jpg`);
       setMedium(medium);
     }
     setSmall(small);
@@ -35,9 +35,9 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
         <h3>{media.title}</h3>
         <dl>
           <dt className="visually-hidden">Year released</dt>
-          <dd className="font-size-200">{media.release}</dd>
+          <dd>{media.release}</dd>
           <dt className="visually-hidden">Category</dt>
-          <dd className="font-size-200">
+          <dd>
             {media.isMovie ? (
               <>
                 <MovieIcon />
@@ -51,7 +51,7 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
             )}
           </dd>
           <dt className="visually-hidden">Age rating</dt>
-          <dd className="font-size-200">{media.age}</dd>
+          <dd>{media.age}</dd>
         </dl>
       </div>
       <div className="bookmark">
