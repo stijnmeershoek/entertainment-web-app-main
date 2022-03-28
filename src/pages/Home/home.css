@@ -1,0 +1,127 @@
+.home {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m-m);
+  overflow-x: visible;
+  overflow-y: auto;
+  padding: 30px;
+  padding-block: 60px;
+  --media-reel-gap: calc(var(--media-reel-padding-inline) * 0.75);
+}
+
+.home::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+}
+
+.home::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+}
+
+.home::-webkit-scrollbar-thumb {
+  background-color: var(--red-300);
+}
+
+.search-input {
+  display: flex;
+  gap: 1rem;
+}
+
+.search-input svg {
+  width: 1.5rem;
+}
+
+.search-input input {
+  background: transparent;
+  border: none;
+  color: inherit;
+  flex-grow: 1;
+  flex-basis: 100%;
+  min-width: 0;
+  caret-color: var(--red-300);
+  padding-block: 0.5rem;
+  border-bottom: 1px solid transparent;
+  font-size: var(--font-size-400);
+  color: var(--gray-400);
+}
+
+.search-input input:focus-visible {
+  outline: none;
+  border-color: var(--gray-300);
+}
+
+.search-input input::placeholder {
+  color: var(--gray-400-75pc);
+}
+
+section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m-m);
+}
+
+section h2 {
+  font-size: var(--font-size-500);
+  font-weight: var(--font-weight-light);
+}
+
+.horizontal-slider {
+  width: calc(100% + 60px);
+  margin-left: -30px;
+}
+
+.media-reel {
+  gap: 30px;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding: 30px;
+}
+
+.media-reel::after,
+.media-reel::before {
+  content: "";
+  flex-basis: calc(var(--_media-reel-padding-inline) - var(--_media-reel-gap));
+  flex-shrink: 0;
+}
+
+.media-reel > * {
+  flex-shrink: 0;
+}
+
+.media-reel.overflowing {
+  padding-block-end: 30px;
+}
+
+.media-reel > * {
+  transition: opacity 0.5s linear;
+}
+
+.media-reel > li[inert] {
+  opacity: 0.3;
+}
+
+.media-grid {
+  --media-grid-min-width: 125px;
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: repeat(auto-fill, minmax(var(--media-grid-min-width), 1fr));
+  row-gap: var(--space-s-m);
+  column-gap: var(--space-s-l);
+}
+
+@media screen and (min-width: 768px) {
+  .media-grid {
+    --media-grid-min-width: 200px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .media-grid {
+    --media-grid-min-width: 250px;
+  }
+}

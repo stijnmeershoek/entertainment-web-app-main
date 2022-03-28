@@ -1,0 +1,60 @@
+.masthead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--gray-200);
+  border-radius: 25px;
+  padding: var(--space-s-l);
+  background-color: var(--gray-200);
+  gap: 4.5rem;
+  margin: 30px;
+  margin-right: 0;
+}
+
+.masthead .primary-navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  gap: var(--space-m-l);
+  align-items: center;
+}
+
+.logo {
+  color: var(--red-300);
+  width: var(--space-m-m);
+}
+
+.primary-navigation svg {
+  height: 1.25rem;
+  width: auto;
+}
+
+.primary-navigation a.active {
+  color: var(--gray-400);
+}
+.primary-navigation a {
+  color: var(--gray-300);
+  display: block;
+}
+.primary-navigation a:hover,
+.primary-navigation a:focus-visible {
+  color: var(--red-300);
+}
+
+.avatar {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  width: var(--space-m-l);
+  max-width: unset;
+  height: auto;
+  object-fit: cover;
+  outline: 1px solid var(--gray-400);
+  outline-offset: -1px;
+}
+
+@media screen and (min-width: 768px) {
+  .primary-navigation svg {
+    width: 1.25rem;
+  }
+}

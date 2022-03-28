@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import "./app.css";
 
-function App() {
+import { Home } from "./pages/Home";
+import { Nav } from "./components/Nav";
+
+export default function App() {
+  const location = useLocation();
+  const [reverse, setReverse] = useState(false);
+  const [bookmarked, setBookmarked] = useState(["one"]);
+
+  const props = {
+    reverse: reverse,
+    setReverse: setReverse,
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Nav bookmarked={bookmarked} />
+      <AnimatePresence initial={false}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home {...props} />}></Route>
+          <Route path="*" element={<Navigate to="/" />}></Route>
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 }
-
-export default App;

@@ -1,0 +1,10 @@
+.avatar {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  width: var(--space-m-l);
+  max-width: unset;
+  height: auto;
+  object-fit: cover;
+  outline: 1px solid var(--gray-400);
+  outline-offset: -1px;
+}

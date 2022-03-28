@@ -1,0 +1,198 @@
+.media-card {
+  --meta-gap: 0.375rem;
+  --play-button-opacity: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "image"
+    "info";
+}
+
+.media-card:hover {
+  cursor: pointer;
+}
+
+.media-card:hover,
+.media-card:focus-within {
+  --play-button-opacity: 1;
+}
+
+.media-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.media-card:focus-within a {
+  outline: none;
+}
+
+.media-card .info {
+  grid-area: info;
+  display: flex;
+  flex-direction: column-reverse;
+  z-index: 2;
+}
+
+.media-card[data-trending] .info {
+  isolation: isolate;
+  grid-area: image;
+  align-self: end;
+  padding: var(--space-s-s);
+}
+
+.media-card h3 {
+  font-size: var(--font-size-400);
+  font-weight: var(--font-weight-medium);
+}
+
+@media screen and (min-width: 768px) {
+  .media-card {
+    --meta-gap: 0.5rem;
+  }
+}
+
+.media-card dd {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.media-card dd svg {
+  display: inline-block;
+  width: 0.9em;
+  opacity: 0.75;
+  margin-inline-end: var(--meta-gap);
+}
+
+.media-card dd:not(:last-child)::after {
+  content: "\2022";
+  margin-inline: var(--meta-gap);
+}
+
+.media-card .play-button {
+  display: flex;
+  gap: var(--space-xs-xs);
+  padding: 0.5rem;
+  background-color: var(--gray-400-25pc);
+  border-radius: 999px;
+  padding-inline-end: var(--space-s-s);
+  align-items: center;
+  font-size: var(--font-size-300);
+  opacity: var(--play-button-opacity);
+  transition: opacity 200ms linear;
+  z-index: 3;
+}
+
+.media-card .play-button svg {
+  width: var(--space-s-m);
+}
+
+.media-card .image-wrapper {
+  grid-area: image;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  grid-template-areas: "layer";
+  place-items: center;
+  isolation: isolate;
+}
+
+.media-card .image-wrapper > * {
+  grid-area: layer;
+  position: relative;
+}
+
+.media-card img {
+  object-fit: cover;
+  height: auto;
+  width: 100%;
+  transition: filter 200ms linear;
+}
+
+.media-card:hover img,
+.media-card:focus-within img {
+  filter: brightness(0.5);
+}
+
+.media-card[data-trending] .image-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, hsl(var(--gray-100-hsl) / 0%), hsl(var(--gray-100-hsl) / 75%));
+  z-index: 2;
+}
+
+@media screen and (min-width: 768px) {
+  .media-card img {
+    aspect-ratio: 440 / 280;
+  }
+
+  .media-card[data-trending] img {
+    aspect-ratio: 940 / 460;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .media-card img {
+    aspect-ratio: 560 / 348;
+  }
+}
+
+.media-card .bookmark {
+  position: relative;
+  grid-area: image;
+  align-self: start;
+  justify-self: end;
+  padding: 0.5rem;
+  z-index: 2;
+}
+
+.media-card .bookmark label {
+  min-width: 40px;
+  height: auto;
+  display: grid;
+  place-items: center;
+  background-color: var(--gray-100-50pc);
+  border: none;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  transition: background-color 200ms linear, color 200ms linear;
+}
+
+.media-card .bookmark label:hover,
+.media-card .bookmark label:focus-within {
+  background-color: var(--gray-400);
+  color: var(--gray-100);
+}
+
+.media-card .bookmark label span {
+  display: grid;
+  grid-template-areas: layer;
+  place-items: center;
+}
+
+.media-card .bookmark label span > * {
+  grid-area: layer;
+}
+
+.media-card input:not(:checked) + span {
+  --checked-opacity: 0;
+  --unchecked-opacity: 1;
+}
+
+.media-card input:checked + span {
+  --checked-opacity: 1;
+  --unchecked-opacity: 0;
+}
+
+.checked {
+  opacity: var(--checked-opacity);
+  transition: opacity 200ms linear;
+}
+
+.unchecked {
+  opacity: var(--unchecked-opacity);
+  transition: opacity 200ms linear;
+}
