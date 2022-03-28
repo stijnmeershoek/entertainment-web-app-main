@@ -19,19 +19,14 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
   };
 
   useEffect(() => {
-    if (trending) {
-      const small = require(`../../assets/thumbnails/${media.title}/trending/small.jpg`);
-      const large = require(`../../assets/thumbnails/${media.title}/trending/large.jpg`);
-      setSmall(small);
-      setLarge(large);
-    } else {
-      const small = require(`../../assets/thumbnails/${media.title}/regular/small.jpg`);
+    const small = require(`../../assets/thumbnails/${media.title}/trending/small.jpg`);
+    const large = require(`../../assets/thumbnails/${media.title}/trending/large.jpg`);
+    if (!trending) {
       const medium = require(`../../assets/thumbnails/${media.title}/regular/medium.jpg`);
-      const large = require(`../../assets/thumbnails/${media.title}/regular/large.jpg`);
-      setSmall(small);
       setMedium(medium);
-      setLarge(large);
     }
+    setSmall(small);
+    setLarge(large);
   }, []);
 
   return (
