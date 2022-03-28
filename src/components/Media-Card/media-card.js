@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./media-card.css";
 import { PlayIcon } from "../Icons/play";
 import { BookmarkIcon } from "../Icons/bookmark";
@@ -7,6 +7,10 @@ import { MovieIcon } from "../Icons/movie";
 import { TVSeriesIcon } from "../Icons/tv-series";
 
 export function MediaCard({ title = "1998", bookmarked, trending }) {
+  const [small, setSmall] = useState();
+  const [medium, setMedium] = useState();
+  const [large, setLarge] = useState();
+
   const media = {
     title: title,
     isMovie: true,
@@ -14,8 +18,24 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
     age: "18+",
   };
 
+  useEffect(() => {
+    if (trending) {
+      const small = require(`../../assets/thumbnails/${media.title}/trending/small.jpg`);
+      const large = require(`../../assets/thumbnails/${media.title}/trending/large.jpg`);
+      setSmall(small);
+      setLarge(large);
+    } else {
+      const small = require(`../../assets/thumbnails/${media.title}/regular/small.jpg`);
+      const medium = require(`../../assets/thumbnails/${media.title}/regular/medium.jpg`);
+      const large = require(`../../assets/thumbnails/${media.title}/regular/large.jpg`);
+      setSmall(small);
+      setMedium(medium);
+      setLarge(large);
+    }
+  }, []);
+
   return (
-    <article className="media-card">
+    <article className="media-card" data-trending={trending}>
       <div className="info">
         <h3>{media.title}</h3>
         <dl>
@@ -51,11 +71,7 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
       </div>
       <div className="image-wrapper">
         <img
-          srcSet={
-            trending
-              ? `${require(`../../assets/thumbnails/${media.title}/${trending ? "trending" : "regular"}/small.jpg`)} 480w, ${require(`../../assets/thumbnails/${media.title}/${trending ? "trending" : "regular"}/large.jpg`)} 940w`
-              : `${require(`../../assets/thumbnails/${media.title}/${trending ? "trending" : "regular"}/small.jpg`)} 328w,${require(`../../assets/thumbnails/${media.title}/${trending ? "trending" : "regular"}/medium.jpg`)} 440w, ${require(`../../assets/thumbnails/${media.title}/${trending ? "trending" : "regular"}/large.jpg`)} 560w`
-          }
+          srcSet={trending ? `${small} 480w, ${large} 940w` : `${small} 328w,${medium} 440w, ${large} 560w`}
           sizes={
             trending
               ? `
@@ -68,7 +84,7 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
   280px
 `
           }
-          src={trending ? require(`../../assets/thumbnails/${media.title}/${trending ? "trending" : "regular"}/small.jpg`) : require(`../../assets/thumbnails/${media.title}/${trending ? "trending" : "regular"}/small.jpg`)}
+          src={small}
           alt=""
           width={trending ? 240 : 164}
           height={trending ? 140 : 110}

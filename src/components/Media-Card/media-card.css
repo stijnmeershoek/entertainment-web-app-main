@@ -34,7 +34,7 @@
   z-index: 2;
 }
 
-.media-card[data-trending] .info {
+.media-card[data-trending="true"] .info {
   isolation: isolate;
   grid-area: image;
   align-self: end;
@@ -115,7 +115,7 @@
   filter: brightness(0.5);
 }
 
-.media-card[data-trending] .image-wrapper::after {
+.media-card[data-trending="true"] .image-wrapper::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -128,7 +128,7 @@
     aspect-ratio: 440 / 280;
   }
 
-  .media-card[data-trending] img {
+  .media-card[data-trending="true"] img {
     aspect-ratio: 940 / 460;
   }
 }

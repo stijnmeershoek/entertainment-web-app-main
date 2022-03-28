@@ -108,7 +108,6 @@ section h2 {
 .media-grid {
   --media-grid-min-width: 125px;
   display: grid;
-  min-height: 100vh;
   grid-template-columns: repeat(auto-fill, minmax(var(--media-grid-min-width), 1fr));
   row-gap: var(--space-s-m);
   column-gap: var(--space-s-l);
