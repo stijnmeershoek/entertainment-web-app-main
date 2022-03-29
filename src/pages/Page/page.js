@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export function Page(props) {
   useEffect(() => {
     props.setReverse(false);
-  }, []);
+  }, [props]);
 
   let pageVariants = {
     initial: {

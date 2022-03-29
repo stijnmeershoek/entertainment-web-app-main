@@ -47,7 +47,8 @@ export function Nav({ bookmarked }) {
         >
           <TVSeriesIcon></TVSeriesIcon>
         </Link>
-        {bookmarked != "" && (
+        {console.log(bookmarked.length)}
+        {bookmarked.length !== 0 && (
           <Link
             to="/bookmarked"
             onClick={() => {

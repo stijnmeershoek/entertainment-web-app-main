@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./media-card.css";
 import { PlayIcon } from "../Icons/play";
 import { BookmarkIcon } from "../Icons/bookmark";

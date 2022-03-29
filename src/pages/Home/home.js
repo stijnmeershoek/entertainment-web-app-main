@@ -8,10 +8,13 @@ import { SearchIcon } from "../../components/Icons/search";
 export function Home({ reverse, setReverse }) {
   const [trending, setTrending] = useState([]);
 
-  useEffect(async () => {
-    const data = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=c91380e87602d7394898bced749c5ef8`);
-    const trending = await data.json();
-    setTrending(trending.results);
+  useEffect(() => {
+    async function fetchTrending() {
+      const data = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=c91380e87602d7394898bced749c5ef8`);
+      const trending = await data.json();
+      setTrending(trending.results);
+    }
+    fetchTrending();
   }, []);
 
   return (
