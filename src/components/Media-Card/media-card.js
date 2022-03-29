@@ -6,39 +6,19 @@ import { BookmarkOutlineIcon } from "../Icons/bookmark-outline";
 import { MovieIcon } from "../Icons/movie";
 import { TVSeriesIcon } from "../Icons/tv-series";
 
-export function MediaCard({ title = "1998", bookmarked, trending }) {
-  const [small, setSmall] = useState();
-  const [medium, setMedium] = useState();
-  const [large, setLarge] = useState();
-
-  const media = {
-    title: title,
-    isMovie: true,
-    release: "2021",
-    age: "18+",
-  };
-
-  useEffect(() => {
-    const small = require(`../../assets/thumbnails/${title.replace(/\s+/g, '-').toLowerCase()}/${trending ? "trending" : "regular"}/small.jpg`);
-    const large = require(`../../assets/thumbnails/${title.replace(/\s+/g, '-').toLowerCase()}/${trending ? "trending" : "regular"}/large.jpg`);
-    if (!trending) {
-      const medium = require(`../../assets/thumbnails/${title.replace(/\s+/g, '-').toLowerCase()}/regular/medium.jpg`);
-      setMedium(medium);
-    }
-    setSmall(small);
-    setLarge(large);
-  }, []);
+export function MediaCard({ bookmarked, trending, data }) {
+  const imageBasePath = "https://image.tmdb.org/t/p";
 
   return (
     <article className="media-card" data-trending={trending}>
       <div className="info">
-        <h3>{media.title}</h3>
+        <h3>{data.media_type === "movie" ? data.title : data.name}</h3>
         <dl>
           <dt className="visually-hidden">Year released</dt>
-          <dd>{media.release}</dd>
+          <dd>{data.media_type === "movie" ? data.release_date.substring(0, 4) : data.first_air_date.substring(0, 4)}</dd>
           <dt className="visually-hidden">Category</dt>
           <dd>
-            {media.isMovie ? (
+            {data.media_type === "movie" ? (
               <>
                 <MovieIcon />
                 Movie
@@ -50,13 +30,17 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
               </>
             )}
           </dd>
-          <dt className="visually-hidden">Age rating</dt>
-          <dd>{media.age}</dd>
+          {data.adult && (
+            <>
+              <dt className="visually-hidden">Age rating</dt>
+              <dd>18+</dd>
+            </>
+          )}
         </dl>
       </div>
       <div className="bookmark">
         <label>
-          <span className="visually-hidden">Bookmark ${media.title}</span>
+          <span className="visually-hidden">Bookmark ${data.title}</span>
           <input type="checkbox" name="isBookmarked" className="visually-hidden" defaultChecked={bookmarked} />
           <span>
             <BookmarkIcon className="checked" />
@@ -66,7 +50,7 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
       </div>
       <div className="image-wrapper">
         <img
-          srcSet={trending ? `${small} 480w, ${large} 940w` : `${small} 328w,${medium} 440w, ${large} 560w`}
+          srcSet={trending ? `${imageBasePath}/w780/${data.backdrop_path} 480w, ${imageBasePath}/w1280/${data.backdrop_path} 940w` : `${imageBasePath}/w342/${data.poster_path} 328w,${imageBasePath}/w500/${data.poster_path} 440w, ${imageBasePath}/w780/${data.poster_path} 560w`}
           sizes={
             trending
               ? `
@@ -79,7 +63,7 @@ export function MediaCard({ title = "1998", bookmarked, trending }) {
   280px
 `
           }
-          src={small}
+          src={trending ? `${imageBasePath}/w300/${data.backdrop_path}` : `${imageBasePath}/w342/${data.poster_path}`}
           alt=""
           width={trending ? 240 : 164}
           height={trending ? 140 : 110}

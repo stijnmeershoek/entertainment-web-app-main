@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import "./App.css";
+import "./app.css";
 
 import { Home } from "./pages/Home";
 import { Nav } from "./components/Nav";

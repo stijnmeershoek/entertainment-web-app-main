@@ -22,7 +22,7 @@
 }
 
 .home::-webkit-scrollbar-thumb {
-  background-color: var(--red-300);
+  background-color: hsl(var(--gray-300-hsl) / 0.5);
 }
 
 .search-input {
@@ -67,42 +67,6 @@ section {
 section h2 {
   font-size: var(--font-size-500);
   font-weight: var(--font-weight-light);
-}
-
-.horizontal-slider {
-  width: calc(100% + 60px);
-  margin-left: -30px;
-}
-
-.media-reel {
-  gap: 30px;
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  scroll-padding: 30px;
-}
-
-.media-reel::after,
-.media-reel::before {
-  content: "";
-  flex-basis: calc(var(--_media-reel-padding-inline) - var(--_media-reel-gap));
-  flex-shrink: 0;
-}
-
-.media-reel > * {
-  flex-shrink: 0;
-}
-
-.media-reel.overflowing {
-  padding-block-end: 30px;
-}
-
-.media-reel > * {
-  transition: opacity 0.5s linear;
-}
-
-.media-reel > li[inert] {
-  opacity: 0.3;
 }
 
 .media-grid {
