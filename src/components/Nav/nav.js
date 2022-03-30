@@ -12,9 +12,12 @@ import { Avatar } from "../Avatar/avatar";
 import avatar from "../../assets/image-avatar.png";
 
 import { Link } from "react-router-dom";
+import { useAppState } from "../../context/AppContext";
 
 export function Nav({ bookmarked }) {
+  const [prevPage, setPrevPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const { reverseDirection } = useAppState();
 
   return (
     <header className="masthead">
@@ -23,7 +26,9 @@ export function Nav({ bookmarked }) {
         <Link
           to="/"
           onClick={() => {
+            if (prevPage > 0) reverseDirection(true);
             setCurrentPage(0);
+            setPrevPage(0);
           }}
           className={currentPage === 0 ? "active" : ""}
         >
@@ -32,7 +37,10 @@ export function Nav({ bookmarked }) {
         <Link
           to="/movies"
           onClick={() => {
+            if (prevPage > 1) reverseDirection(true);
+            if (prevPage < 1) reverseDirection(false);
             setCurrentPage(1);
+            setPrevPage(1);
           }}
           className={currentPage === 1 ? "active" : ""}
         >
@@ -41,18 +49,22 @@ export function Nav({ bookmarked }) {
         <Link
           to="/tv-series"
           onClick={() => {
+            if (prevPage > 2) reverseDirection(true);
+            if (prevPage < 2) reverseDirection(false);
             setCurrentPage(2);
+            setPrevPage(2);
           }}
           className={currentPage === 2 ? "active" : ""}
         >
           <TVSeriesIcon></TVSeriesIcon>
         </Link>
-        {console.log(bookmarked.length)}
-        {bookmarked.length !== 0 && (
+        {bookmarked && (
           <Link
-            to="/bookmarked"
+            to="/bookmarks"
             onClick={() => {
+              reverseDirection(false);
               setCurrentPage(3);
+              setPrevPage(3);
             }}
             className={currentPage === 3 ? "active" : ""}
           >

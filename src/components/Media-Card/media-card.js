@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./media-card.css";
+import { useAppState } from "../../context/AppContext";
 import { PlayIcon } from "../Icons/play";
 import { BookmarkIcon } from "../Icons/bookmark";
 import { BookmarkOutlineIcon } from "../Icons/bookmark-outline";
 import { MovieIcon } from "../Icons/movie";
 import { TVSeriesIcon } from "../Icons/tv-series";
 
-export function MediaCard({ bookmarked, trending, data }) {
+export function MediaCard({ trending, data }) {
   const imageBasePath = "https://image.tmdb.org/t/p";
+  const [bookmarked, setBookmarked] = useState();
+  const { bookmarks, addBookmark, removeBookmark } = useAppState();
+
+  const check = (e) => {
+    let checked = e.target.checked;
+    let id = e.target.parentElement.parentElement.parentElement.dataset.id;
+    if (!checked) {
+      removeBookmark(id, data.media_type);
+    } else {
+      addBookmark(id, data.media_type);
+    }
+  };
+
+  useEffect(() => {
+    if (bookmarks.some((bookmark) => bookmark.id === data.id.toString() && bookmark.type === data.media_type.toString())) {
+      setBookmarked(true);
+    } else {
+      setBookmarked(false);
+    }
+  }, [bookmarks]);
 
   return (
-    <article className="media-card" data-trending={trending}>
+    <article className="media-card" data-id={data.id} data-trending={trending}>
       <div className="info">
         <h3>{data.media_type === "movie" ? data.title : data.name}</h3>
         <dl>
@@ -41,7 +62,15 @@ export function MediaCard({ bookmarked, trending, data }) {
       <div className="bookmark">
         <label>
           <span className="visually-hidden">Bookmark ${data.title}</span>
-          <input type="checkbox" name="isBookmarked" className="visually-hidden" defaultChecked={bookmarked} />
+          <input
+            type="checkbox"
+            name="isBookmarked"
+            className="visually-hidden"
+            defaultChecked={bookmarked}
+            onClick={(e) => {
+              check(e);
+            }}
+          />
           <span>
             <BookmarkIcon className="checked" />
             <BookmarkOutlineIcon className="unchecked" />

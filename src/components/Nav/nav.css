@@ -58,3 +58,23 @@
     width: 1.25rem;
   }
 }
+
+@media screen and (min-width: 768px) {
+  .masthead {
+    border-radius: 20px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .masthead {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 30px;
+    gap: 4.5rem;
+  }
+
+  .masthead .primary-navigation {
+    flex-direction: row;
+    flex-grow: 0;
+  }
+}

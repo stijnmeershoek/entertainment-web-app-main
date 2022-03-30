@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useAppState } from "../../context/AppContext";
 import { motion } from "framer-motion";
 
 export function Page(props) {
-  useEffect(() => {
-    props.setReverse(false);
-  }, [props]);
+  const { reverse } = useAppState();
 
   let pageVariants = {
     initial: {
-      y: props.reverse || props.localReverse ? "-100vh" : "100vh",
+      y: reverse ? "-100vh" : "100vh",
     },
     in: {
       y: 0,
     },
     out: {
-      y: props.reverse || props.localReverse ? "100vh" : "-100vh",
+      y: reverse ? "100vh" : "-100vh",
     },
   };
 

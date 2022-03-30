@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./media-reel.css";
 import { useConveyer } from "@egjs/react-conveyer";
 import { ReactComponent as NextArrow } from "../../assets/next-arrow.svg";
@@ -6,8 +6,9 @@ import { ReactComponent as PreviousArrow } from "../../assets/prev-arrow.svg";
 
 export function Slider(props) {
   const conveyorRef = useRef(null);
-  const { scrollIntoView } = useConveyer(conveyorRef, {
+  const { scrollIntoView, updateItems } = useConveyer(conveyorRef, {
     horizontal: true,
+    preventClickOnDrag: true,
   });
 
   const [atStart, setAtStart] = useState(true);
@@ -28,6 +29,10 @@ export function Slider(props) {
       setAtStart(false);
     }
   };
+
+  useEffect(() => {
+    updateItems();
+  });
 
   return (
     <div className="horizontal-slider">

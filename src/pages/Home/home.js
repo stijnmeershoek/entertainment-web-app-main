@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./home.css";
 import { Page } from "../Page";
+import { useAppState } from "../../context/AppContext";
 import { Slider } from "../../components/Media-Reel/media-reel";
 import { MediaCard } from "../../components/Media-Card/media-card";
 import { SearchIcon } from "../../components/Icons/search";
 
-export function Home({ reverse, setReverse }) {
-  const [trending, setTrending] = useState([]);
-
-  useEffect(() => {
-    async function fetchTrending() {
-      const data = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=c91380e87602d7394898bced749c5ef8`);
-      const trending = await data.json();
-      setTrending(trending.results);
-    }
-    fetchTrending();
-  }, []);
+export function Home() {
+  const { trending } = useAppState();
 
   return (
-    <Page className="home" reverse={reverse} setReverse={setReverse}>
+    <Page className="home">
       <form className="search-input">
         <SearchIcon></SearchIcon>
         <label htmlFor="search" className="visually-hidden">
@@ -31,7 +23,7 @@ export function Home({ reverse, setReverse }) {
         <Slider>
           {trending.map((el) => {
             if (el.media_type !== "movie" && el.media_type !== "tv") return;
-            return <MediaCard key={el.id} bookmarked={false} trending={true} data={el}></MediaCard>;
+            return <MediaCard key={el.id} trending={true} data={el}></MediaCard>;
           })}
         </Slider>
       </section>
@@ -40,7 +32,7 @@ export function Home({ reverse, setReverse }) {
         <div className="media-grid">
           {trending.map((el) => {
             if (el.media_type !== "movie" && el.media_type !== "tv") return;
-            return <MediaCard key={el.id} bookmarked={false} trending={false} data={el}></MediaCard>;
+            return <MediaCard key={el.id} trending={false} data={el}></MediaCard>;
           })}
         </div>
       </section>
