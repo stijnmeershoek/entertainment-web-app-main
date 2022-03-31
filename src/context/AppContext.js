@@ -31,6 +31,8 @@ export function AppProvider({ children }) {
   };
 
   useEffect(() => {
+    let storedBookmarks = JSON.parse(localStorage.getItem("ENT_BOOKMARKS"));
+    setBookmarks(storedBookmarks);
     async function fetchTrending() {
       setLoading(true);
       const data = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=c91380e87602d7394898bced749c5ef8`);
@@ -40,6 +42,10 @@ export function AppProvider({ children }) {
     }
     fetchTrending();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("ENT_BOOKMARKS", JSON.stringify(bookmarks));
+  }, [bookmarks]);
 
   return <AppContext.Provider value={{ trending, bookmarks, addBookmark, removeBookmark, reverse, reverseDirection }}>{loading ? <LoadingScreen></LoadingScreen> : children}</AppContext.Provider>;
 }
