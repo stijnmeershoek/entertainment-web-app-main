@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { LogoIcon } from "../Icons/logo";
 import "./media-card.css";
 import { useAppState } from "../../context/AppContext";
 import { PlayIcon } from "../Icons/play";
@@ -18,7 +19,7 @@ export function MediaCard({ trending, data }) {
     if (!checked) {
       removeBookmark(id, data.media_type);
     } else {
-      addBookmark(id, data.media_type);
+      addBookmark(id, data.media_type, data.title);
     }
   };
 
@@ -35,8 +36,12 @@ export function MediaCard({ trending, data }) {
       <div className="info">
         <h3>{data.media_type === "movie" ? data.title : data.name}</h3>
         <dl>
-          <dt className="visually-hidden">Year released</dt>
-          <dd>{data.media_type === "movie" ? data.release_date.substring(0, 4) : data.first_air_date.substring(0, 4)}</dd>
+          {(data.release_date || data.first_air_date) && (
+            <>
+              <dt className="visually-hidden">Year released</dt>
+              <dd>{data.media_type === "movie" ? data.release_date.substring(0, 4) : data.first_air_date.substring(0, 4)}</dd>
+            </>
+          )}
           <dt className="visually-hidden">Category</dt>
           <dd>
             {data.media_type === "movie" ? (
@@ -78,25 +83,31 @@ export function MediaCard({ trending, data }) {
         </label>
       </div>
       <div className="image-wrapper">
-        <img
-          srcSet={trending ? `${imageBasePath}/w780/${data.backdrop_path} 480w, ${imageBasePath}/w1280/${data.backdrop_path} 940w` : `${imageBasePath}/w342/${data.poster_path} 328w,${imageBasePath}/w500/${data.poster_path} 440w, ${imageBasePath}/w780/${data.poster_path} 560w`}
-          sizes={
-            trending
-              ? `
+        {data.backdrop_path || data.poster_path ? (
+          <img
+            srcSet={trending ? `${imageBasePath}/w780/${data.backdrop_path} 480w, ${imageBasePath}/w1280/${data.backdrop_path} 940w` : `${imageBasePath}/w342/${data.poster_path} 328w,${imageBasePath}/w500/${data.poster_path} 440w, ${imageBasePath}/w780/${data.poster_path} 560w`}
+            sizes={
+              trending
+                ? `
   (max-width: 375px) 240px,
   470px
 `
-              : `
+                : `
   (max-width: 375px) 164px,
   (max-width: 768px) 220px,
   280px
 `
-          }
-          src={trending ? `${imageBasePath}/w300/${data.backdrop_path}` : `${imageBasePath}/w342/${data.poster_path}`}
-          alt=""
-          width={trending ? 240 : 164}
-          height={trending ? 140 : 110}
-        />
+            }
+            src={trending ? `${imageBasePath}/w300/${data.backdrop_path}` : `${imageBasePath}/w342/${data.poster_path}`}
+            alt=""
+            width={trending ? 240 : 164}
+            height={trending ? 140 : 110}
+          />
+        ) : (
+          <div className="no-image-available">
+            <LogoIcon />
+          </div>
+        )}
         <div className="play-button">
           <PlayIcon />
           Play

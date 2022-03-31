@@ -9,6 +9,7 @@
   gap: 4.5rem;
   margin: 30px;
   margin-right: 0;
+  z-index: 100;
 }
 
 .masthead .primary-navigation {

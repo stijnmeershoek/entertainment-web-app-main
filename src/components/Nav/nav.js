@@ -32,6 +32,7 @@ export function Nav({ bookmarked }) {
           }}
           className={currentPage === 0 ? "active" : ""}
         >
+          <span className="visually-hidden">Home Page</span>
           <HomeIcon></HomeIcon>
         </Link>
         <Link
@@ -44,6 +45,7 @@ export function Nav({ bookmarked }) {
           }}
           className={currentPage === 1 ? "active" : ""}
         >
+          <span className="visually-hidden">Movies Page</span>
           <MovieIcon></MovieIcon>
         </Link>
         <Link
@@ -56,6 +58,7 @@ export function Nav({ bookmarked }) {
           }}
           className={currentPage === 2 ? "active" : ""}
         >
+          <span className="visually-hidden">TV Series Page</span>
           <TVSeriesIcon></TVSeriesIcon>
         </Link>
         {bookmarked && (
@@ -68,6 +71,7 @@ export function Nav({ bookmarked }) {
             }}
             className={currentPage === 3 ? "active" : ""}
           >
+            <span className="visually-hidden">Bookmarked Page</span>
             {currentPage === 3 ? <BookmarkIcon></BookmarkIcon> : <BookmarkOutlineIcon></BookmarkOutlineIcon>}
           </Link>
         )}

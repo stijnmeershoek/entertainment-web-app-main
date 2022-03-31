@@ -17,9 +17,9 @@ export function AppProvider({ children }) {
     setReverse(bool);
   };
 
-  const addBookmark = (id, type) => {
+  const addBookmark = (id, type, title) => {
     if (bookmarks.some((bookmark) => bookmark.id === id && bookmark.type === type)) return;
-    setBookmarks((bookmarks) => [...bookmarks, { id: id, type: type }]);
+    setBookmarks((bookmarks) => [...bookmarks, { id: id, type: type, title: title }]);
   };
 
   const removeBookmark = (id, type) => {
@@ -32,6 +32,7 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     async function fetchTrending() {
+      setLoading(true);
       const data = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=c91380e87602d7394898bced749c5ef8`);
       const trending = await data.json();
       setTrending(trending.results);

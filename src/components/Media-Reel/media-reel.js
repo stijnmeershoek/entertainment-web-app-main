@@ -37,6 +37,7 @@ export function Slider(props) {
   return (
     <div className="horizontal-slider">
       <button
+        aria-label="previous"
         className="prev btn"
         disabled={atStart}
         onClick={() => {
@@ -49,6 +50,7 @@ export function Slider(props) {
         <PreviousArrow />
       </button>
       <button
+        aria-label="next"
         className="next btn"
         disabled={atEnd}
         onClick={() => {
@@ -60,7 +62,7 @@ export function Slider(props) {
       >
         <NextArrow />
       </button>
-      <div onScroll={onScroll} ref={conveyorRef} className="media-reel overflowing" role="list">
+      <div onScroll={onScroll} ref={conveyorRef} className="media-reel overflowing">
         {props.children}
       </div>
     </div>

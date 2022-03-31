@@ -8,6 +8,23 @@ export function Bookmarked() {
   const { bookmarks } = useAppState();
   const [bookmarkedMovies, setBookmarkedMovies] = useState([]);
   const [bookmarkedTV, setBookmarkedTV] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (!searchTerm) {
+        setSearchResults([]);
+        return;
+      }
+      if (!bookmarkedMovies && !bookmarkedTV) return;
+      let combined = bookmarkedMovies.concat(bookmarkedTV);
+      let results = combined.filter((bookmark) => bookmark.title?.toLowerCase().includes(searchTerm.toLowerCase()));
+      setSearchResults(results);
+    }, 750);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   useEffect(() => {
     async function fetchBookmarks() {
@@ -37,26 +54,53 @@ export function Bookmarked() {
         <label htmlFor="search" className="visually-hidden">
           Search for bookmarked shows
         </label>
-        <input type="search" placeholder="Search for movies or TV Series" autoComplete="off" autoCorrect="off" autoCapitalize="off" id="search" name="query" />
+        <input
+          type="search"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+          placeholder="Search for movies or TV Series"
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          id="search"
+          name="query"
+        />
       </form>
-      <section aria-labelledby="section-title">
-        <h2 id="section-title">Bookmarked Movies</h2>
-        <div className="media-grid">
-          {bookmarkedMovies?.length !== 0 &&
-            bookmarkedMovies.map((el) => {
-              return <MediaCard key={el.id} trending={false} data={el} type="movie" id={el.id}></MediaCard>;
+      {searchResults.length !== 0 ? (
+        <section aria-labelledby="section-title">
+          <h2 id="section-title">
+            Found {searchResults.length} {searchResults.length > 1 ? "results" : "result"} for '{searchTerm}'
+          </h2>
+          <div className="media-grid">
+            {searchResults.map((el) => {
+              return <MediaCard key={el.id} trending={false} data={el}></MediaCard>;
             })}
-        </div>
-      </section>
-      <section aria-labelledby="section-title">
-        <h2 id="section-title">Bookmarked TV Series</h2>
-        <div className="media-grid">
-          {bookmarkedTV?.length !== 0 &&
-            bookmarkedTV.map((el) => {
-              return <MediaCard key={el.id} trending={false} data={el} type="tv" id={el.id}></MediaCard>;
-            })}
-        </div>
-      </section>
+          </div>
+        </section>
+      ) : (
+        <>
+          <section aria-labelledby="section-title-movies">
+            <h2 id="section-title-movies">Bookmarked Movies</h2>
+            <div className="media-grid">
+              {bookmarkedMovies?.length !== 0 &&
+                bookmarkedMovies.map((el) => {
+                  return <MediaCard key={el.id} trending={false} data={el} type="movie" id={el.id}></MediaCard>;
+                })}
+            </div>
+          </section>
+          <section aria-labelledby="section-title-tv">
+            <h2 id="section-title-tv">Bookmarked TV Series</h2>
+            <div className="media-grid">
+              {bookmarkedTV?.length !== 0 &&
+                bookmarkedTV.map((el) => {
+                  return <MediaCard key={el.id} trending={false} data={el} type="tv" id={el.id}></MediaCard>;
+                })}
+            </div>
+          </section>
+        </>
+      )}
     </Page>
   );
 }

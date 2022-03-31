@@ -4,6 +4,7 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: auto max-content;
   grid-template-areas:
     "image"
     "info";
@@ -113,6 +114,20 @@
   position: relative;
 }
 
+.media-card .no-image-available {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray-200);
+}
+
+.media-card .no-image-available svg {
+  fill: var(--red-300);
+  width: max(25%, 50px);
+}
+
 .media-card img {
   object-fit: cover;
   height: auto;
@@ -128,6 +143,11 @@
 .media-card:hover img,
 .media-card:focus-within img {
   filter: brightness(0.5);
+}
+
+.media-card:hover .no-image-available,
+.media-card:focus-within .no-image-available {
+  filter: brightness(0.75);
 }
 
 .media-card[data-trending="true"] .image-wrapper::after {
