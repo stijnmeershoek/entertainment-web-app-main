@@ -32,9 +32,10 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     let storedBookmarks = JSON.parse(localStorage.getItem("ENT_BOOKMARKS"));
-    setBookmarks(storedBookmarks);
+    if (storedBookmarks) {
+      setBookmarks(storedBookmarks);
+    }
     async function fetchTrending() {
-      setLoading(true);
       const data = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=c91380e87602d7394898bced749c5ef8`);
       const trending = await data.json();
       setTrending(trending.results);
